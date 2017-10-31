@@ -1,41 +1,53 @@
 var wins = 0;
 var remainingGuesses = 12;
-var alreadyGuessed = null;
+var alreadyGuessed = [];
 
 var hangmanWords = ['cow', 'cat', 'dog', 'pig'];
-var computerGuess = hangmanWords[Math.floor(Math.random() * hangmanWords.length)];
+var answer = hangmanWords[Math.floor(Math.random() * hangmanWords.length)];
+
+function updateWins() {
+	document.querySelector("#wins").innerHTML = wins;
+}
+
+function updateRemaining() {
+	document.querySelector("#remaining").innerHTML = remainingGuesses;
+}
+
+function updateLettersGuessed () {
+	document.querySelector("#alreadyGuessed").innerHTML = alreadyGuessed;
+}
+
+function startGame() {
+	document.querySelector("#current").innerHTML = '_ _ _';
+}
+
+
+startGame();
 
 document.onkeyup = function(event) {
 	var userGuess = event.key;
-	var wordLength = computerGuess.length;
 
-	for (var i = 0; i < wordLength; i++) {
-		if (userGuess === i) {
+	console.log(answer);
+
+	for (var i = 0; i < answer.length; i++) {
+		if (userGuess === answer[i]) {
 			console.log(userGuess + ' is correct!');
 		}
-
-		else {
-			remainingGuesses--;
-		}
 	}
 
-	if (userGuess === computerGuess.charAt(0)) {
-		console.log(userGuess + ' is correct!');
-	}
-
-	else if (userGuess === computerGuess.charAt(1)) {
-		console.log(userGuess + ' is correct!');
-	}
-
-	else if (userGuess === computerGuess.charAt(2)) {
-		console.log(userGuess + ' is correct!');
-	}
-
-	else {
+	if (userGuess !== answer[i]) {
+		alreadyGuessed.push(' ' + userGuess);
 		remainingGuesses--;
 	}
-	console.log(computerGuess);
-	console.log('Remaining Guesses:' + remainingGuesses);
-};
 
-// “document.getElementById”, alongside either “innerHTML” or “textcontent”, to write to the DOM.
+	
+
+	//console.log('Wins: ' + wins);
+	//console.log('Remaining Guesses: ' + remainingGuesses);
+	//console.log('Already Guessed: ' + userGuess);
+
+	updateWins();
+	updateRemaining();
+	updateLettersGuessed();
+	
+};
