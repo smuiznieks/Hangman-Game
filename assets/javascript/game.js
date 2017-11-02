@@ -49,20 +49,24 @@ newGame();
 document.onkeyup = function(event) {
 	var userGuess = event.key;
 	console.log(answer);
+	var incorrectGuess = true;
 
 	for (var i = 0; i < answer.length; i++) {
 		if (userGuess === answer[i]) {
-			console.log(userGuess + ' is true');
+			console.log(userGuess + ' is correct');
 			document.querySelector('#id' + [i]).innerHTML = userGuess;
 			correctGuess++;
+			incorrectGuess = false;
 		}
 	}
 
-	alreadyGuessed.push(' ' + userGuess);
-	remainingGuesses--;
-	updateRemaining();
-	updateLettersGuessed();	
-
+	if (incorrectGuess != false) {
+		alreadyGuessed.push(' ' + userGuess);
+		remainingGuesses--;
+		updateRemaining();
+		updateLettersGuessed();	
+	}
+	
 
 	if (correctGuess === answer.length) {
 		restartGame ();
