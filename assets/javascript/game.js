@@ -1,26 +1,37 @@
 var wins = 0;
 var remainingGuesses = 12;
 var alreadyGuessed = [];
+var correct = 0;
 var hangmanWords = ['html', 'css', 'javascript', 'networking', 'jquery', 'interviewing', 'ajax', 'mysql'];
-var answer = hangmanWords[Math.floor(Math.random() * hangmanWords.length)];
-var correctGuess = 0;
+var word = '';
 
-
-function newGame () {
-	for (var j = 0; j < answer.length; j++) {
-		var currentWord = document.querySelector('#current');
-		var newWord = document.createElement('span');
-		newWord.innerHTML = '_ ';
-		currentWord.appendChild(newWord);
-		newWord.setAttribute('id', 'id' + [j]);
-	}
+function getNewWord () {
+	word = hangmanWords[Math.floor(Math.random() * hangmanWords.length)];
+	console.log(word);
 }
 
-function restartGame () {
+function newGame () {
+	getNewWord ();
+	for (var j = 0; j < word.length; j++) {
+		var currentGame = document.querySelector('#current');
+		var newWord = document.createElement('span');
+		newWord.innerHTML = '_ ';
+		currentGame.appendChild(newWord);
+		newWord.setAttribute('id', 'id' + [j]);
+	}
+	correct = 0;
+}
+
+function clearGame () {
+	for (var l = 0; l < word.length; word[l++] = 0) {
+		var parent = document.querySelector('#current');
+		var child = document.querySelector('#id' + [l]);
+		parent.removeChild(child);
+	}
 	remainingGuesses = 12;
 	alreadyGuessed = [];
-	correctGuess = 0;
-	newGame ();
+	updateRemaining ();
+	updateLettersGuessed ();
 }
 
 function updateWins() {
@@ -35,45 +46,49 @@ function updateLettersGuessed () {
 	document.querySelector('#alreadyGuessed').innerHTML = alreadyGuessed;
 }
 
-
-	
-
-// Execute functions below
-
-document.querySelector('#wins').innerHTML = wins;
-document.querySelector('#remaining').innerHTML = remainingGuesses;
-document.querySelector('#alreadyGuessed').innerHTML = alreadyGuessed;
-
-newGame();
+updateWins ();
+updateRemaining ();
+newGame ();
 
 document.onkeyup = function(event) {
 	var userGuess = event.key;
-	console.log(answer);
-	var incorrectGuess = true;
+	var repeatGuess = null;
+	var correctGuess = null;
 
-	for (var i = 0; i < answer.length; i++) {
-		if (userGuess === answer[i]) {
-			console.log(userGuess + ' is correct');
-			document.querySelector('#id' + [i]).innerHTML = userGuess;
-			correctGuess++;
-			incorrectGuess = false;
+	if (alreadyGuessed.length > 0) {
+		for (var k = 0; k < alreadyGuessed.length; k++) {
+			if (userGuess === alreadyGuessed[k]) {
+				console.log(userGuess + 'is a repeat');
+			}
 		}
 	}
 
-	if (incorrectGuess != false) {
+	for (var i = 0; i < word.length; i++) {
+		if (userGuess === word[i]) {
+			console.log(userGuess + ' is correct');
+			document.querySelector('#id' + [i]).innerHTML = userGuess;
+			correctGuess = true;
+			correct++;
+		}
+	}
+
+	if (correctGuess != true) {
 		alreadyGuessed.push(' ' + userGuess);
 		remainingGuesses--;
 		updateRemaining();
 		updateLettersGuessed();	
 	}
 	
-
-	if (correctGuess === answer.length) {
-		restartGame ();
+	if (correct === word.length) {
+		wins++;
+		updateWins ();
+		clearGame ();
+		newGame ();
 	}
 
 	if (remainingGuesses < 1) {
-		restartGame ();
+		clearGame ();
+		newGame ();
 	}
 
 }
