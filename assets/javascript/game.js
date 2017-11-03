@@ -72,11 +72,19 @@ document.onkeyup = function(event) {
 		}
 	}
 
+	for (var m = 0; m < alreadyGuessed.length; m++) {
+		if (' ' + userGuess === alreadyGuessed[m]) {
+			console.log('this is a repeat');
+			correctGuess = true;
+		}
+	}
+
 	if (correctGuess != true) {
 		alreadyGuessed.push(' ' + userGuess);
 		remainingGuesses--;
 		updateRemaining();
-		updateLettersGuessed();	
+		updateLettersGuessed();
+		console.log(alreadyGuessed);	
 	}
 	
 	if (correct === word.length) {

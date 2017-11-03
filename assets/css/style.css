@@ -1,17 +1,57 @@
-
-h1, h4, h5 {
-	padding-bottom: 15px;
-}
-
 body {
-	font-family: 'Pangolin', cursive;
+	font-family: 'Pangolin', 'Verdana', sans-serif;
+	font-size: 18px;
+	background-image: url("../images/notebook.jpeg");
 }
 
-/* .container {
-	background-image: url('https://www.pixelstalk.net/wp-content/uploads/2016/08/Free-Chalkboard-Backgrounds.jpg');
-	background-repeat: no-repeat;
-}*/
+h1 {
+	font-size: 52px;
+	text-align: center;
+	padding: 40px 0 40px 0;
+}
 
-h1, h4 {
-	font-family: 'League Script', cursive;
+h2, h3 {
+	padding-bottom: 20px;
+	font-family: 'League Script', 'Verdana', cursive;
+	text-align: center;
+}
+
+h2 {
+	font-size: 36px;
+}
+
+h3 {
+	font-size: 28px;
+}
+
+.section {
+	width: 500px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.section img {
+	width: 100%;
+	z-index: -20;
+}
+
+.game {
+	text-align: center;
+	width: 40%;
+	position: absolute;
+	top: 60px;
+	left: 40px;
+	color: white;
+}
+
+.stats {
+	width: 40%;
+	position: absolute;
+	top: 60px;
+	right: 40px;
+	color: white;
+}
+
+p {
+	padding-bottom: 10px;
 }
